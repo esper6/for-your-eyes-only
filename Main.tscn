@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqwt082kouqnp"]
+
+[ext_resource type="PackedScene" uid="uid://dxeijghda1vip" path="res://UI/Window.tscn" id="1"]
+[ext_resource type="Script" uid="uid://hkaj15d5frwt" path="res://Main.gd" id="1_r0du0"]
+[ext_resource type="PackedScene" uid="uid://cjlyqsy73h6o1" path="res://VN/DialogueBox.tscn" id="2"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r0du0")
+
+[node name="DesktopBackground" type="TextureRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="WindowContainer" type="Control" parent="."]
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="EmailWindow" parent="WindowContainer" instance=ExtResource("1")]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 100.0
+offset_right = 100.0
+offset_bottom = 100.0
+
+[node name="ImageViewerWindow" parent="WindowContainer" instance=ExtResource("1")]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 100.0
+offset_right = 400.0
+offset_bottom = 100.0
+
+[node name="Taskbar" type="HBoxContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="EmailButton" type="Button" parent="Taskbar"]
+layout_mode = 2
+text = "Email"
+
+[node name="ImageViewerButton" type="Button" parent="Taskbar"]
+layout_mode = 2
+text = "Image Viewer"
+
+[node name="DialogueBox" parent="." instance=ExtResource("2")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

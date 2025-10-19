@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dxeijghda1vip"]
+
+[node name="Window" type="Panel"]
+
+[node name="TitleBar" type="Panel" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+
+[node name="ContentArea" type="Control" parent="."]
+anchors_preset = 0
+anchor_right = 1.0
+
+[node name="Label" type="Label" parent="ContentArea"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 176.0
+offset_right = 384.0
+offset_bottom = 199.0
+text = "Drag this window to the corner."
