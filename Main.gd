@@ -1,12 +1,12 @@
 extends Control
 
-@onready var file_explorer_window: Panel = $WindowContainer/FileExplorerWindow
+@onready var file_explorer: CharacterBody2D = $WindowContainer/FileExplorer
 @onready var file_explorer_button: Button = $Taskbar/TaskbarContent/FileExplorerButton
 @onready var time_label: Label = $Taskbar/TaskbarContent/TimeLabel
 
 func _ready() -> void:
 	# Show file explorer on startup
-	file_explorer_window.visible = true
+	file_explorer.visible = true
 	
 	# Connect buttons
 	file_explorer_button.pressed.connect(_on_file_explorer_button_pressed)
@@ -33,20 +33,19 @@ func _update_time() -> void:
 	time_label.text = "%d:%02d %s" % [hour, minute, am_pm]
 
 func _on_file_explorer_button_pressed() -> void:
-	file_explorer_window.visible = !file_explorer_window.visible
+	file_explorer.visible = !file_explorer.visible
 
 func _start_intro_dialogue() -> void:
-	# Intro dialogue when game starts
-	var intro_dialogue: Array = [
-		{"character": "Agent", "text": "Welcome to your new assignment. This system contains sensitive information."},
-		{"character": "Agent", "text": "Your job is to find evidence hidden in the files. Be thorough."},
-		{"character": "You", "text": "Understood. Where should I start looking?"},
-		{"character": "Agent", "text": "Check the Documents folder. There might be something interesting in the personal files."},
-		{"character": "Agent", "text": "Good luck. And remember... trust no one."}
-	]
-	
-	# Start the dialogue
-	DialogueSystem.load_dialogue(intro_dialogue)
+	# Schedule an incoming call from Agent X after 10 seconds
+	# When accepted, it will play the "intro" dialogue
+	PhoneCallSystem.schedule_call(
+		"intro_call",           # Unique call ID
+		"Agent X",              # Caller name
+		"intro",                # Dialogue to play when accepted
+		10.0,                   # Wait 10 seconds before calling
+		10.0,                   # Retry after 10 seconds if denied
+		-1                      # Infinite retries (-1)
+	)
 
 # Example functions for changing settings (to be called from Options menu later)
 func set_text_speed_slow() -> void:

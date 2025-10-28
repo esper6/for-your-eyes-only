@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqwt082kouqnp"]
+[gd_scene load_steps=5 format=3 uid="uid://dqwt082kouqnp"]
 
 [ext_resource type="Script" uid="uid://hkaj15d5frwt" path="res://Main.gd" id="1_r0du0"]
-[ext_resource type="PackedScene" uid="uid://fileexplorerwindow1" path="res://Windows/FileExplorerWindow.tscn" id="2_fileexplorer"]
+[ext_resource type="PackedScene" uid="uid://bm6isvsc4ki1a" path="res://Windows/FileExplorer.tscn" id="2_fileexplorer"]
 [ext_resource type="PackedScene" uid="uid://cjlyqsy73h6o1" path="res://VN/DialogueBox.tscn" id="3_dialoguebox"]
+[ext_resource type="PackedScene" uid="uid://phonecallui001" path="res://UI/PhoneCallUI.tscn" id="4_phonecallui"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -74,12 +75,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="FileExplorerWindow" parent="WindowContainer" instance=ExtResource("2_fileexplorer")]
-layout_mode = 1
-offset_left = 150.0
-offset_top = 80.0
-offset_right = 950.0
-offset_bottom = 580.0
+[node name="FileExplorer" parent="WindowContainer" instance=ExtResource("2_fileexplorer")]
+position = Vector2(200, 150)
 
 [node name="Taskbar" type="Panel" parent="."]
 layout_mode = 1
@@ -121,4 +118,7 @@ text = "12:00 PM"
 vertical_alignment = 1
 
 [node name="DialogueBox" parent="." instance=ExtResource("3_dialoguebox")]
+layout_mode = 1
+
+[node name="PhoneCallUI" parent="." instance=ExtResource("4_phonecallui")]
 layout_mode = 1

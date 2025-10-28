@@ -29,4 +29,3 @@ func _on_options_pressed() -> void:
 func _on_quit_pressed() -> void:
 	# Quit the game
 	get_tree().quit()
-

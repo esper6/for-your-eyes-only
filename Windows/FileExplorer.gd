@@ -187,10 +187,16 @@ func _navigate_to(path: String) -> void:
 		history.append(path)
 		history_position = history.size() - 1
 	
+	var old_path = current_path
 	current_path = path
 	_populate_file_list()
 	_update_address_bar()
 	_update_navigation_buttons()
+	
+	# Emit event when navigating to a new location
+	if old_path != path:
+		EventBus.directory_changed.emit(path)
+		_check_folder_triggers(path)
 
 func _update_address_bar() -> void:
 	address_bar.text = current_path
@@ -208,14 +214,27 @@ func _on_folder_tree_item_activated() -> void:
 func _on_file_list_item_activated(index: int) -> void:
 	var metadata: Dictionary = file_list.get_item_metadata(index)
 	if metadata.get("type") == "folder":
+		var folder_name: String = metadata["name"]
 		var new_path: String = current_path
 		if not new_path.ends_with("/"):
 			new_path += "/"
-		new_path += metadata["name"] + "/"
+		new_path += folder_name + "/"
+		
+		# Emit folder opened event
+		EventBus.folder_opened.emit(folder_name, new_path)
+		
 		_navigate_to(new_path)
 	elif metadata.get("type") == "file":
-		# File opened - you can emit a signal or handle file opening here
-		print("Opened file: ", metadata["name"])
+		var file_name: String = metadata["name"]
+		var file_path: String = current_path + file_name
+		
+		# Emit file opened event
+		EventBus.file_opened.emit(file_name, file_path)
+		
+		# Check for file-specific dialogue triggers
+		_check_file_triggers(file_name)
+		
+		print("Opened file: ", file_name)
 
 func _on_address_submitted(new_path: String) -> void:
 	if not new_path.ends_with("/"):
@@ -237,3 +256,51 @@ func _on_forward_pressed() -> void:
 		_populate_file_list()
 		_update_address_bar()
 		_update_navigation_buttons()
+
+# ============================================
+# EVENT TRIGGERS
+# ============================================
+
+## Check if navigating to a folder should trigger dialogue
+func _check_folder_triggers(path: String) -> void:
+	# Extract folder name from path
+	var parts = path.split("/", false)
+	if parts.is_empty():
+		return
+	
+	var folder_name = parts[-1]
+	
+	# First-time visit dialogues (using GameStateManager to track)
+	match folder_name:
+		"Documents":
+			if not GameStateManager.is_puzzle_solved("visited_documents"):
+				EventBus.play_dialogue("first_documents_open")
+				GameStateManager.mark_puzzle_solved("visited_documents")
+		
+		"Pictures":
+			if not GameStateManager.is_puzzle_solved("visited_pictures"):
+				EventBus.play_dialogue("first_pictures_open")
+				GameStateManager.mark_puzzle_solved("visited_pictures")
+		
+		"Downloads":
+			if not GameStateManager.is_puzzle_solved("visited_downloads"):
+				EventBus.play_dialogue("first_downloads_open")
+				GameStateManager.mark_puzzle_solved("visited_downloads")
+
+## Check if opening a file should trigger dialogue
+func _check_file_triggers(file_name: String) -> void:
+	# File-specific dialogues
+	match file_name:
+		"work_notes.txt":
+			if not GameStateManager.is_puzzle_solved("read_work_notes"):
+				EventBus.play_dialogue("work_notes_opened")
+				GameStateManager.mark_puzzle_solved("read_work_notes")
+		
+		"diary.txt":
+			if not GameStateManager.is_puzzle_solved("read_diary"):
+				EventBus.play_dialogue("diary_opened")
+				GameStateManager.mark_puzzle_solved("read_diary")
+		
+		"secrets.txt":
+			# This always triggers, even on repeat visits
+			EventBus.play_dialogue("secret_file_found")
