@@ -10,7 +10,7 @@ extends Control
 var current_text: String = ""
 var displayed_text: String = ""
 var text_index: int = 0
-var typewriter_speed: float = 0.03  # Seconds per character
+var typewriter_speed: float = 0.03  # Seconds per character (will be overridden by settings)
 var is_typing: bool = false
 var typewriter_timer: float = 0.0
 
@@ -20,9 +20,22 @@ func _ready() -> void:
 	DialogueSystem.dialogue_started.connect(_on_dialogue_started)
 	DialogueSystem.dialogue_ended.connect(_on_dialogue_ended)
 	
+	# Connect to settings changes
+	GameStateManager.settings_changed.connect(_on_settings_changed)
+	
+	# Load typewriter speed from settings
+	_update_typewriter_speed()
+	
 	# Hide initially
 	hide()
 	continue_indicator.hide()
+
+func _update_typewriter_speed() -> void:
+	typewriter_speed = GameStateManager.get_setting("typewriter_speed", 0.03)
+
+func _on_settings_changed(setting_name: String, _new_value) -> void:
+	if setting_name == "typewriter_speed":
+		_update_typewriter_speed()
 
 func _process(delta: float) -> void:
 	if is_typing:

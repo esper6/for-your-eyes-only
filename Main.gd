@@ -3,7 +3,6 @@ extends Control
 @onready var file_explorer_window: Panel = $WindowContainer/FileExplorerWindow
 @onready var file_explorer_button: Button = $Taskbar/TaskbarContent/FileExplorerButton
 @onready var time_label: Label = $Taskbar/TaskbarContent/TimeLabel
-@onready var test_dialogue_button: Button = $TestDialogueButton
 
 func _ready() -> void:
 	# Show file explorer on startup
@@ -11,10 +10,12 @@ func _ready() -> void:
 	
 	# Connect buttons
 	file_explorer_button.pressed.connect(_on_file_explorer_button_pressed)
-	test_dialogue_button.pressed.connect(_on_test_dialogue_pressed)
 	
 	# Update time
 	_update_time()
+	
+	# Start with intro dialogue
+	_start_intro_dialogue()
 
 func _update_time() -> void:
 	var time_dict: Dictionary = Time.get_time_dict_from_system()
@@ -34,9 +35,9 @@ func _update_time() -> void:
 func _on_file_explorer_button_pressed() -> void:
 	file_explorer_window.visible = !file_explorer_window.visible
 
-func _on_test_dialogue_pressed() -> void:
-	# Example dialogue sequence
-	var example_dialogue: Array = [
+func _start_intro_dialogue() -> void:
+	# Intro dialogue when game starts
+	var intro_dialogue: Array = [
 		{"character": "Agent", "text": "Welcome to your new assignment. This system contains sensitive information."},
 		{"character": "Agent", "text": "Your job is to find evidence hidden in the files. Be thorough."},
 		{"character": "You", "text": "Understood. Where should I start looking?"},
@@ -45,4 +46,21 @@ func _on_test_dialogue_pressed() -> void:
 	]
 	
 	# Start the dialogue
-	DialogueSystem.load_dialogue(example_dialogue)
+	DialogueSystem.load_dialogue(intro_dialogue)
+
+# Example functions for changing settings (to be called from Options menu later)
+func set_text_speed_slow() -> void:
+	GameStateManager.set_setting("typewriter_speed", 0.05)
+	print("Text speed set to SLOW")
+
+func set_text_speed_normal() -> void:
+	GameStateManager.set_setting("typewriter_speed", 0.03)
+	print("Text speed set to NORMAL")
+
+func set_text_speed_fast() -> void:
+	GameStateManager.set_setting("typewriter_speed", 0.01)
+	print("Text speed set to FAST")
+
+func set_text_speed_instant() -> void:
+	GameStateManager.set_setting("typewriter_speed", 0.0)
+	print("Text speed set to INSTANT")

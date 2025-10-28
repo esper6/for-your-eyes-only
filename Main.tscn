@@ -122,11 +122,3 @@ vertical_alignment = 1
 
 [node name="DialogueBox" parent="." instance=ExtResource("3_dialoguebox")]
 layout_mode = 1
-
-[node name="TestDialogueButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 180.0
-offset_bottom = 51.0
-text = "Test Dialogue"
