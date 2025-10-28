@@ -1,0 +1,56 @@
+# Godot engine caches & generated folders
+.godot/
+.import/
+.mono/          # even if unused in GDScript-only, keep it ignored
+.cache/
+
+# IDE & local tooling
+.idea/
+.vscode/
+.vs/
+.DS_Store
+Thumbs.db
+
+# Export/build outputs
+bin/
+build/
+export/
+exports/
+*.pck
+*.zip
+*.exe
+*.dmg
+*.app
+*.aab
+*.apk
+*.wasm
+*.webmanifest
+
+# Godot import sidecars & translations
+*.import
+*.translation
+
+# Media / heavy binary assets (Cursor should focus on code)
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.svg
+*.ogg
+*.wav
+*.mp3
+*.ttf
+*.otf
+*.glb
+*.gltf
+*.blend
+*.fbx
+*.mesh
+*.res
+*.tres      # (Optional) Only ignore if you don’t want Cursor reading resource files
+
+# Shader caches & misc
+*.shadercache
+*.tmp
+*.log
+logs/

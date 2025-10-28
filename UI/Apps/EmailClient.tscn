@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://emailclient1"]
+
+[node name="EmailClient" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Toolbar" type="HBoxContainer" parent="."]
+
+[node name="Refresh" type="Button" parent="Toolbar"]
+text = "Refresh"
+
+[node name="Compose" type="Button" parent="Toolbar"]
+text = "Compose"
+
+[node name="Body" type="HSplitContainer" parent="."]
+size_flags_vertical = 3
+
+[node name="Inbox" type="ItemList" parent="Body"]
+size_flags_horizontal = 3
+
+[node name="MessageView" type="RichTextLabel" parent="Body"]
+bbcode_enabled = true
+text = "[b]Welcome![/b]\nThis is a placeholder email client."
+

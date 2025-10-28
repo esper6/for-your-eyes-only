@@ -20,3 +20,7 @@ config/icon="res://icon.svg"
 GameStateManager="*res://Scripts/GameState.gd"
 DialogueSystem="*res://VN/DialogueManager.gd"
 DragSystem="*res://UI/DragManager.gd"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

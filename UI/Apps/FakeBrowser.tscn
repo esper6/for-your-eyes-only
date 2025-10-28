@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://fakebrowser1"]
+
+[node name="FakeBrowser" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="NavBar" type="HBoxContainer" parent="."]
+
+[node name="Back" type="Button" parent="NavBar"]
+text = "<"
+
+[node name="Forward" type="Button" parent="NavBar"]
+text = ">"
+
+[node name="AddressBar" type="LineEdit" parent="NavBar"]
+size_flags_horizontal = 3
+text = "https://example.invalid"
+
+[node name="View" type="RichTextLabel" parent="."]
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[center][b]This is a placeholder browser view.[/b]\nLoad your content here.[/center]"
+

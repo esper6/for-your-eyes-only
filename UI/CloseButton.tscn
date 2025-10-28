@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cho4afpquemgl"]
+
+[ext_resource type="Texture2D" uid="uid://j7xsxht5ku2l" path="res://assets/textures/RedX.png" id="1_3x1rt"]
+
+[node name="CloseButton" type="Button"]
+offset_right = 108.0
+offset_bottom = 108.0
+icon = ExtResource("1_3x1rt")

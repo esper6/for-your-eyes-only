@@ -1,0 +1,85 @@
+[gd_scene load_steps=3 format=3 uid="uid://bm6isvsc4ki1a"]
+
+[ext_resource type="Script" uid="uid://cvhs2clx7pvd0" path="res://Windows/FileExplorer.gd" id="1_fileexplorer"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_window"]
+size = Vector2(600, 400)
+
+[node name="FileExplorer" type="CharacterBody2D"]
+script = ExtResource("1_fileexplorer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(300, 200)
+shape = SubResource("RectangleShape2D_window")
+
+[node name="Background" type="Panel" parent="."]
+offset_right = 600.0
+offset_bottom = 400.0
+mouse_filter = 2
+
+[node name="TitleBar" type="Panel" parent="."]
+offset_right = 600.0
+offset_bottom = 30.0
+
+[node name="TitleLabel" type="Label" parent="TitleBar"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 3.0
+offset_right = 152.0
+offset_bottom = 26.0
+text = "File Explorer"
+vertical_alignment = 1
+
+[node name="ContentContainer" type="HBoxContainer" parent="."]
+offset_top = 30.0
+offset_right = 600.0
+offset_bottom = 400.0
+
+[node name="Sidebar" type="VBoxContainer" parent="ContentContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+
+[node name="SidebarLabel" type="Label" parent="ContentContainer/Sidebar"]
+layout_mode = 2
+text = "Folders"
+horizontal_alignment = 1
+
+[node name="FolderTree" type="Tree" parent="ContentContainer/Sidebar"]
+layout_mode = 2
+size_flags_vertical = 3
+hide_root = true
+
+[node name="MainArea" type="VBoxContainer" parent="ContentContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+
+[node name="TopBar" type="HBoxContainer" parent="ContentContainer/MainArea"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="ContentContainer/MainArea/TopBar"]
+layout_mode = 2
+text = "←"
+
+[node name="ForwardButton" type="Button" parent="ContentContainer/MainArea/TopBar"]
+layout_mode = 2
+text = "→"
+
+[node name="AddressBar" type="LineEdit" parent="ContentContainer/MainArea/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter path..."
+
+[node name="FileListContainer" type="VBoxContainer" parent="ContentContainer/MainArea"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FileListLabel" type="Label" parent="ContentContainer/MainArea/FileListContainer"]
+layout_mode = 2
+text = "Contents"
+
+[node name="FileList" type="ItemList" parent="ContentContainer/MainArea/FileListContainer"]
+layout_mode = 2
+size_flags_vertical = 3

@@ -1,10 +1,43 @@
-[gd_scene format=3 uid="uid://dxeijghda1vip"]
+[gd_scene load_steps=3 format=3 uid="uid://bue711k8rmqso"]
+
+[ext_resource type="Texture2D" uid="uid://j7hhm1p0e8bd" path="res://assets/textures/border.png" id="2_fphuv"]
+[ext_resource type="Texture2D" uid="uid://j7xsxht5ku2l" path="res://assets/textures/RedX.png" id="2_gjxvf"]
 
 [node name="Window" type="Panel"]
 
 [node name="TitleBar" type="Panel" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 10
 anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="TitleBar"]
+layout_mode = 0
+offset_left = 623.0
+offset_top = 210.0
+offset_right = 1064.0
+offset_bottom = 445.0
+texture = ExtResource("2_fphuv")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Label" type="Label" parent="TitleBar/NinePatchRect"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 95.0
+offset_bottom = 25.0
+text = "Goongle Chromo"
+
+[node name="TextureButton" type="TextureButton" parent="TitleBar/NinePatchRect"]
+layout_mode = 0
+offset_left = 425.0
+offset_top = 1.0
+offset_right = 585.0
+offset_bottom = 160.99994
+scale = Vector2(0.1, 0.1)
+texture_normal = ExtResource("2_gjxvf")
+stretch_mode = 0
 
 [node name="ContentArea" type="Control" parent="."]
 anchors_preset = 0
@@ -12,8 +45,8 @@ anchor_right = 1.0
 
 [node name="Label" type="Label" parent="ContentArea"]
 layout_mode = 0
-offset_left = 140.0
-offset_top = 176.0
-offset_right = 384.0
-offset_bottom = 199.0
+offset_left = 15.0
+offset_top = 120.0
+offset_right = 259.0
+offset_bottom = 143.0
 text = "Drag this window to the corner."

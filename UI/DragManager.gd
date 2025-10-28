@@ -1,5 +1,4 @@
 extends Node
-class_name DragManager
 
 var dragging_window = null
 
