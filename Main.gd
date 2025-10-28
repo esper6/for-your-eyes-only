@@ -36,16 +36,9 @@ func _on_file_explorer_button_pressed() -> void:
 	file_explorer.visible = !file_explorer.visible
 
 func _start_intro_dialogue() -> void:
-	# Schedule an incoming call from Agent X after 10 seconds
-	# When accepted, it will play the "intro" dialogue
-	PhoneCallSystem.schedule_call(
-		"intro_call",           # Unique call ID
-		"Agent X",              # Caller name
-		"intro",                # Dialogue to play when accepted
-		10.0,                   # Wait 10 seconds before calling
-		10.0,                   # Retry after 10 seconds if denied
-		-1                      # Infinite retries (-1)
-	)
+	# Schedule the intro call using PhoneCallDatabase
+	# All call details are defined in PhoneCallDatabase.gd
+	PhoneCallDatabase.schedule("intro_call")
 
 # Example functions for changing settings (to be called from Options menu later)
 func set_text_speed_slow() -> void:

@@ -22,6 +22,7 @@ DialogueSystem="*res://VN/DialogueManager.gd"
 EventBus="*res://Scripts/EventBus.gd"
 DialogueDatabase="*res://VN/DialogueDatabase.gd"
 PhoneCallSystem="*res://Scripts/PhoneCallSystem.gd"
+PhoneCallDatabase="*res://Scripts/PhoneCallDatabase.gd"
 DragSystem="*res://UI/DragManager.gd"
 
 [rendering]

@@ -4,6 +4,8 @@
 
 The Phone Call System allows you to create immersive incoming call notifications throughout the game. Calls appear as popups in the bottom-right corner with Accept/Deny buttons, and can automatically retry if denied.
 
+**NEW**: Calls can be **time-based** (scheduled after delays) or **event-based** (triggered automatically when game events happen).
+
 ## Architecture
 
 ### Components
@@ -13,25 +15,41 @@ The Phone Call System allows you to create immersive incoming call notifications
    - Handles call lifecycle
    - Integrates with DialogueSystem
 
-2. **PhoneCallUI** (`UI/PhoneCallUI.tscn`)
+2. **PhoneCallDatabase** (Autoload: `PhoneCallDatabase`) **← NEW!**
+   - Central repository for all call definitions
+   - Automatic event-based triggering
+   - Prevents duplicate calls
+   - Runtime call management
+
+3. **PhoneCallUI** (`UI/PhoneCallUI.tscn`)
    - Bottom-right popup with caller name
    - Accept and Deny buttons
    - Fade-in/fade-out animations
 
-3. **EventBus Integration**
+4. **EventBus Integration**
    - Phone call events for system-wide communication
    - Tracks call state across game
+   - Automatic event listening
 
 ---
 
 ## Quick Start
 
-### Schedule a Call
+### Method 1: Using PhoneCallDatabase (Recommended)
 
 ```gdscript
-# Schedule a call that plays dialogue when accepted
+# Simply schedule by ID - all details are in PhoneCallDatabase
+PhoneCallDatabase.schedule("intro_call")
+```
+
+**That's it!** The call's caller name, dialogue, timing, and retry logic are all defined in `PhoneCallDatabase.gd`.
+
+### Method 2: Direct Scheduling (Advanced)
+
+```gdscript
+# Schedule a call directly with all parameters
 PhoneCallSystem.schedule_call(
-    "intro_call",           # Unique call ID
+    "custom_call",          # Unique call ID
     "Agent X",              # Caller name shown in UI
     "intro",                # Dialogue ID to play when accepted
     10.0,                   # Wait 10 seconds before calling
@@ -40,17 +58,109 @@ PhoneCallSystem.schedule_call(
 )
 ```
 
-### Using DialogueDatabase Helper
+### Event-Based Calls (Automatic!)
+
+Calls can trigger automatically when events happen:
 
 ```gdscript
-# Shorter version using DialogueDatabase
-DialogueDatabase.schedule_dialogue_call(
-    "intro_call",
-    "Agent X",
-    "intro",
-    10.0,       # Delay
-    10.0        # Retry delay
+# In PhoneCallDatabase.gd, define the trigger:
+var event_triggers: Dictionary = {
+    "file_opened": {
+        "secrets.txt": "secret_file_callback"
+    }
+}
+
+# Now when player opens secrets.txt, the call triggers automatically!
+# No code needed in your game logic!
+```
+
+---
+
+## PhoneCallDatabase API (NEW!)
+
+### Core Methods
+
+#### `schedule(call_id: String)`
+
+Schedule a call using its ID from the database.
+
+```gdscript
+PhoneCallDatabase.schedule("intro_call")
+```
+
+All call properties (caller, dialogue, timing) are defined in `PhoneCallDatabase.gd`.
+
+#### `trigger(call_id: String, allow_duplicate: bool = false)`
+
+Trigger a call immediately (for event-based calls).
+
+```gdscript
+# Trigger once (default behavior)
+PhoneCallDatabase.trigger("secret_file_callback")
+
+# Allow multiple triggers
+PhoneCallDatabase.trigger("reminder_call", true)
+```
+
+By default, each call can only be triggered once to prevent spam.
+
+#### `has_been_triggered(call_id: String)`
+
+Check if a call has been triggered already.
+
+```gdscript
+if PhoneCallDatabase.has_been_triggered("intro_call"):
+    print("Player has been contacted")
+```
+
+#### `reset_triggered(call_id: String)` / `reset_all_triggered()`
+
+Reset trigger status (useful for new game or testing).
+
+```gdscript
+# Reset one call
+PhoneCallDatabase.reset_triggered("intro_call")
+
+# Reset all
+PhoneCallDatabase.reset_all_triggered()
+```
+
+### Runtime Management
+
+#### `add_call()`
+
+Add a new call definition at runtime.
+
+```gdscript
+PhoneCallDatabase.add_call(
+    "dynamic_call",        # Call ID
+    "Mystery Caller",      # Caller name
+    "mysterious_warning",  # Dialogue ID
+    0.0,                   # Delay
+    10.0,                  # Retry delay
+    -1                     # Max retries
 )
+```
+
+#### `add_event_trigger()`
+
+Add an event trigger at runtime.
+
+```gdscript
+PhoneCallDatabase.add_event_trigger(
+    "file_opened",          # Event type
+    "mystery_file.txt",     # Event value
+    "informant_tip"         # Call to trigger
+)
+```
+
+#### `get_call_data(call_id: String)`
+
+Get the configuration for a call.
+
+```gdscript
+var call_info = PhoneCallDatabase.get_call_data("intro_call")
+print("Caller: ", call_info.get("caller_name"))
 ```
 
 ---
@@ -181,6 +291,87 @@ EventBus.phone_call_incoming.connect(_on_call_incoming)
 EventBus.phone_call_accepted.connect(_on_call_accepted)
 EventBus.phone_call_denied.connect(_on_call_denied)
 EventBus.phone_call_ended.connect(_on_call_ended)
+```
+
+---
+
+## Event-Based Call System
+
+### How It Works
+
+PhoneCallDatabase listens to EventBus and automatically triggers calls when specific events happen. This is perfect for:
+- Responding to player discoveries
+- Tracking progress
+- Creating reactive narrative
+
+### Available Event Types
+
+| Event Type | Trigger | Example |
+|------------|---------|---------|
+| `file_opened` | When player opens a file | `"secrets.txt"` → calls Agent X |
+| `folder_opened` | When player opens a folder | `"Documents"` → first check-in |
+| `puzzle_completed` | When puzzle is solved | `"puzzle_01"` → congratulations call |
+| `item_found` | When item is discovered | `"usb_drive"` → urgent warning |
+| `discovery_made` | Custom discoveries | Custom mapping |
+
+### Defining Event Triggers
+
+Edit `Scripts/PhoneCallDatabase.gd`:
+
+```gdscript
+var event_triggers: Dictionary = {
+    "file_opened": {
+        "secrets.txt": "secret_file_callback",
+        "work_notes.txt": "informant_tip"
+    },
+    
+    "folder_opened": {
+        "Documents": "first_checkin"
+    },
+    
+    "puzzle_completed": {
+        "puzzle_01": "first_checkin",
+        "puzzle_02": "urgent_warning"
+    }
+}
+```
+
+### How to Use
+
+**Option 1: Automatic (Recommended)**
+
+Just emit the event in your code:
+
+```gdscript
+# In your FileExplorer or game logic
+EventBus.file_opened.emit("secrets.txt", path)
+
+# PhoneCallDatabase automatically triggers the associated call!
+```
+
+**Option 2: Manual Trigger**
+
+```gdscript
+# Trigger a call directly
+PhoneCallDatabase.trigger("secret_file_callback")
+```
+
+### Preventing Duplicate Calls
+
+By default, event-based calls only trigger **once**:
+
+```gdscript
+# First time: call triggers
+EventBus.file_opened.emit("secrets.txt", path)
+
+# Second time: no call (already triggered)
+EventBus.file_opened.emit("secrets.txt", path)
+```
+
+To allow duplicates:
+
+```gdscript
+PhoneCallDatabase.trigger("reminder_call", true)  # allow_duplicate = true
 ```
 
 ---

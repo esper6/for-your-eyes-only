@@ -44,15 +44,12 @@ EventBus.play_dialogue("intro")
 ### Scheduling Phone Calls
 
 ```gdscript
-# Schedule an incoming call with dialogue
-PhoneCallSystem.schedule_call(
-    "intro_call",      # Call ID
-    "Agent X",         # Caller name
-    "intro",           # Dialogue to play when accepted
-    10.0,              # Wait 10 seconds
-    10.0,              # Retry after 10 seconds if denied
-    -1                 # Infinite retries
-)
+# Simple: Schedule by ID (call details in PhoneCallDatabase)
+PhoneCallDatabase.schedule("intro_call")
+
+# Event-based: Calls trigger automatically!
+# When player opens "secrets.txt", Agent X calls automatically
+# (defined in PhoneCallDatabase.gd event_triggers)
 ```
 
 ### Triggering on Game Events
@@ -91,6 +88,7 @@ The game uses several autoload singletons that are globally accessible:
 | `EventBus` | `Scripts/EventBus.gd` | Global event system |
 | `DialogueDatabase` | `VN/DialogueDatabase.gd` | Dialogue content repository |
 | `PhoneCallSystem` | `Scripts/PhoneCallSystem.gd` | Phone call management |
+| `PhoneCallDatabase` | `Scripts/PhoneCallDatabase.gd` | Phone call definitions & triggers |
 | `DragSystem` | `UI/DragManager.gd` | Window dragging system |
 
 ### Key Principles
