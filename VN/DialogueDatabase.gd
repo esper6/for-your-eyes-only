@@ -8,11 +8,11 @@ var dialogues: Dictionary = {
 	# INTRO & TUTORIAL
 	# ============================================
 	"intro": [
-		{"character": "Agent", "text": "Welcome to your new assignment. This system contains sensitive information."},
-		{"character": "Agent", "text": "Your job is to find evidence hidden in the files. Be thorough."},
-		{"character": "You", "text": "Understood. Where should I start looking?"},
-		{"character": "Agent", "text": "Check the Documents folder. There might be something interesting in the personal files."},
-		{"character": "Agent", "text": "Good luck. And remember... trust no one."}
+		{"character": "Kathy HR", "text": "Hi Jamie! Thanks for agreeing to meet at 2AM on Sunday. It was the only time I could squeeze you in!"},
+		{"character": "Kathy HR", "text": "Have you had a chance to look over our Employee Guide Manifesto?"},
+		{"character": "You", "text": "No. Where is it?"},
+		{"character": "Kathy HR", "text": "It should be right on the desktop! Your interviewer told me you were inquisitive but you are next level!"},
+		{"character": "Kathy HR", "text": "Read it then call me back."}
 	],
 	
 	# ============================================
@@ -156,4 +156,3 @@ func schedule_dialogue_call(
 		)
 	else:
 		push_error("[DialogueDatabase] PhoneCallSystem not available")
-

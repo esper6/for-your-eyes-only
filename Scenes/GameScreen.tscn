@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://bmgcaw3v6agi7"]
+[gd_scene load_steps=6 format=3 uid="uid://dqwt082kouqnp"]
 
-[ext_resource type="Script" path="res://Main.gd" id="1_r0du0"]
+[ext_resource type="Script" uid="uid://hkaj15d5frwt" path="res://Scenes/GameScreen.gd" id="1_r0du0"]
 [ext_resource type="PackedScene" uid="uid://bm6isvsc4ki1a" path="res://Windows/FileExplorer.tscn" id="2_fileexplorer"]
 [ext_resource type="PackedScene" uid="uid://cjlyqsy73h6o1" path="res://VN/DialogueBox.tscn" id="3_dialoguebox"]
 [ext_resource type="PackedScene" uid="uid://dnemurc3qml8c" path="res://UI/PhoneCallUI.tscn" id="4_phonecallui"]
+[ext_resource type="PackedScene" uid="uid://c3jvq6pqb8s8j" path="res://UI/DesktopIcon.tscn" id="5_desktopicon"]
 
-[node name="Main" type="Control"]
+[node name="GameScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,42 +30,36 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 20.0
-offset_top = -200.0
-offset_right = 120.0
-offset_bottom = -20.0
+offset_top = -300.0
+offset_right = 150.0
+offset_bottom = -60.0
 grow_vertical = 0
 
-[node name="MyComputer" type="VBoxContainer" parent="DesktopIcons"]
+[node name="EmployeeManifesto" parent="DesktopIcons" instance=ExtResource("5_desktopicon")]
 layout_mode = 2
-
-[node name="Icon" type="ColorRect" parent="DesktopIcons/MyComputer"]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-size_flags_horizontal = 4
-color = Color(0.3, 0.3, 0.3, 1)
-
-[node name="Label" type="Label" parent="DesktopIcons/MyComputer"]
-layout_mode = 2
-text = "My Computer"
-horizontal_alignment = 1
+icon_id = "employee_manifesto"
+icon_label = "Employee Manifesto"
+icon_color = Color(0.9, 0.9, 0.7, 1)
 
 [node name="Spacer1" type="Control" parent="DesktopIcons"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="Documents" type="VBoxContainer" parent="DesktopIcons"]
+[node name="MyComputer" parent="DesktopIcons" instance=ExtResource("5_desktopicon")]
+layout_mode = 2
+icon_id = "my_computer"
+icon_label = "My Computer"
+icon_color = Color(0.3, 0.3, 0.3, 1)
+
+[node name="Spacer2" type="Control" parent="DesktopIcons"]
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="Icon" type="ColorRect" parent="DesktopIcons/Documents"]
-custom_minimum_size = Vector2(64, 64)
+[node name="Documents" parent="DesktopIcons" instance=ExtResource("5_desktopicon")]
 layout_mode = 2
-size_flags_horizontal = 4
-color = Color(0.6, 0.5, 0.3, 1)
-
-[node name="Label" type="Label" parent="DesktopIcons/Documents"]
-layout_mode = 2
-text = "Documents"
-horizontal_alignment = 1
+icon_id = "documents"
+icon_label = "Documents"
+icon_color = Color(0.6, 0.5, 0.3, 1)
 
 [node name="WindowContainer" type="Control" parent="."]
 layout_mode = 1

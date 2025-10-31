@@ -15,10 +15,10 @@ var calls: Dictionary = {
 	# STORY CALLS
 	# ============================================
 	"intro_call": {
-		"caller_name": "Agent X",
+		"caller_name": "Kathy HR",
 		"dialogue_id": "intro",
-		"delay": 10.0,
-		"retry_delay": 10.0,
+		"delay": 5.0,
+		"retry_delay": 3.0,
 		"max_retries": -1
 	},
 	
@@ -249,4 +249,3 @@ func add_event_trigger(event_type: String, event_value: String, call_id: String)
 ## Get all call IDs
 func get_all_call_ids() -> Array:
 	return calls.keys()
-

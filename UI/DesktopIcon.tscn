@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3jvq6pqb8s8j"]
+
+[ext_resource type="Script" path="res://UI/DesktopIcon.gd" id="1_desktop_icon"]
+
+[node name="DesktopIcon" type="VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+script = ExtResource("1_desktop_icon")
+
+[node name="Icon" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 0
+color = Color(0.3, 0.3, 0.3, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Icon"
+horizontal_alignment = 1
+autowrap_mode = 2
+

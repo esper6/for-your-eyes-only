@@ -32,6 +32,12 @@ Welcome to the documentation for **For Your Eyes Only**, a narrative investigati
   - Automatic retry on denial
   - Integration with dialogue system
 
+- **[Day System](DAY_SYSTEM.md)** - Day-based level structure
+  - Reusable GameScreen template
+  - Day-specific logic and progression
+  - Creating new days
+  - Day transition and completion
+
 ## 🎯 Quick Start
 
 ### Playing Dialogue

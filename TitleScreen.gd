@@ -17,8 +17,8 @@ func _ready() -> void:
 	play_button.grab_focus()
 
 func _on_play_pressed() -> void:
-	# Load the main game scene
-	get_tree().change_scene_to_file("res://Main.tscn")
+	# Load Day 0 (first day of the game)
+	get_tree().change_scene_to_file("res://Scenes/Days/Day0.tscn")
 
 func _on_options_pressed() -> void:
 	# TODO: Open options menu

@@ -8,3 +8,4 @@
 - If tests exist (GdUnit4 or WAT), add/adjust tests with code changes.
 - Validate exported properties (ranges, enums) to help the editor UI.
 - For save data, avoid storing direct node references; use resource-friendly data.
+- I found that LLMs often forget the parent="xyz" parameter when creating nodes. Please be sure not to forget this when creating any node in a .tscn file.

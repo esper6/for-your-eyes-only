@@ -224,4 +224,3 @@ func get_current_call_info() -> Dictionary:
 			"retry_count": current_call.retry_count
 		}
 	return {}
-
